@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Résultats & Préconisations | Santé & Territoire</title>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .result-section {
+            border-left: 5px solid var(--primary-blue);
+            padding-left: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .conclusion-card {
+            background: #f8f9fa;
+            border: none;
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .static-graph-placeholder {
+            height: 300px;
+            background: #e1f5fe;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+
+    <!-- Sticky Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fa-solid fa-house-medical text-emerald"></i>
+                <span class="fw-bold">Santé & Territoire</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cartographie.html">Cartographie APL</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="analyse-mortalite.html">Analyse Mortalité</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="resultats.html">Résultats & Préconisations</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="bg-deep-blue text-white pt-5 pb-5">
+        <div class="container pt-5 mt-4 text-center">
+            <h1 class="animate__animated animate__fadeInDown">Analyse de Résultats & Recommandations</h1>
+            <p class="animate__animated animate__fadeInUp opacity-75">Synthèse des conclusions tirées de nos modèles
+                d'analyse territoriale.</p>
+        </div>
+    </div>
+
+    <!-- Main Results Section -->
+    <div class="container pt-5 pb-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+
+                <!-- Section 1 -->
+                <div class="result-section reveal">
+                    <h3 class="fw-bold text-primary mb-4">1. État des lieux de l'Accessibilité aux Soins</h3>
+                    <p class="lead">Nos analyses montrent une aggravation des disparités territoriales entre zones
+                        urbaines et rurales péri-urbaines.</p>
+                    <p>En effet, la moyenne de l'APL sur le territoire ne doit pas cacher des écarts types croissants.
+                        Plus de <strong>30% des communes françaises</strong> présentent un indicateur APL inférieur au
+                        seuil critique de 2,5 visites par habitant et par an.</p>
+                    <div class="static-graph-placeholder mb-4">
+                        <div class="text-center">
+                            <i class="fa-solid fa-chart-column fa-3x text-primary mb-3"></i>
+                            <p class="text-muted fw-bold">Graphique : Répartition de l'APL par décile de population</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2 -->
+                <div class="result-section reveal">
+                    <h3 class="fw-bold text-primary mb-4">2. Impact sur les indicateurs de santé</h3>
+                    <p>Il existe une corrélation positive statistiquement significative entre l'éloignement géographique
+                        des centres de soins primaires et la mortalité évitable par anticipation du diagnostic (cancers,
+                        maladies cardiovasculaires).</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fa-solid fa-circle-info text-emerald me-2"></i> Un écart de survie de
+                            3% a été observé sur les zones à APL très faible.</li>
+                        <li class="mb-2"><i class="fa-solid fa-circle-info text-emerald me-2"></i> L'impact est encore
+                            plus marqué sur la population âgée de plus de 75 ans.</li>
+                    </ul>
+                </div>
+
+                <!-- Section 3 : Recommendations -->
+                <div class="reveal mt-5">
+                    <div class="bg-white p-5 rounded-4 shadow-sm border">
+                        <h3 class="fw-bold text-emerald mb-4"><i class="fa-solid fa-lightbulb me-2"></i> Nos
+                            Préconisations</h3>
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="bg-light p-3 rounded-3 border-start border-4 border-emerald h-100">
+                                    <h5 class="fw-bold">Régulateur Territorial</h5>
+                                    <p class="small text-muted mb-0">Déployer des incitations financières modulées selon
+                                        l'indice APL local réel plutôt que sur des zonages administratifs larges.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="bg-light p-3 rounded-3 border-start border-4 border-emerald h-100">
+                                    <h5 class="fw-bold">Maison de Santé 2.0</h5>
+                                    <p class="small text-muted mb-0">Favoriser l'émergence de structures
+                                        pluri-professionnelles dotées d'outils de télé-expertise avancés.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer mt-5">
+        <div class="container text-center text-secondary small">
+            &copy; 2026 Santé & Territoire. Synthèse & Prévisions.
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>

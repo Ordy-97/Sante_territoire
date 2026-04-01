@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Santé & Territoire | Plateforme d'expertise territoriale</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@700&display=swap"
+        rel="stylesheet">
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <!-- Sticky Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fa-solid fa-house-medical text-emerald"></i>
+                <span class="fw-bold">Santé & Territoire</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="index.html">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cartographie.html">Cartographie APL</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="analyse-mortalite.html">Analyse Mortalité</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="resultats.html">Résultats & Préconisations</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section text-center">
+        <div class="container animate__animated animate__fadeIn">
+            <span class="badge rounded-pill bg-light text-primary mb-3 px-3 py-2 fw-semibold">Saison 4 | Data Science &
+                Santé Publique</span>
+            <h1 class="hero-title animate__animated animate__fadeInUp">La donnée au service de l'accès aux soins</h1>
+            <p class="hero-subtitle col-lg-8 mx-auto animate__animated animate__fadeInUp animate__delay-1s">
+                Né des enseignements de la crise de 2020, notre projet mobilise la statistique territoriale et le SSP
+                Cloud de l'INSEE pour réduire les inégalités d'accès aux soins.
+            </p>
+            <div class="d-flex justify-content-center gap-3 animate__animated animate__fadeInUp animate__delay-2s">
+                <a href="cartographie.html" class="btn btn-emerald btn-lg px-4 py-3 rounded-pill fw-bold">Explorer la
+                    Carte</a>
+                <a href="resultats.html" class="btn btn-outline-light btn-lg px-4 py-3 rounded-pill fw-bold">Lire nos
+                    conclusions</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Project Goals Section -->
+    <section class="py-5" id="objectifs">
+        <div class="container py-5 mt-n5">
+            <div class="row g-4 justify-content-center mt-n5">
+                <div class="col-md-4 reveal">
+                    <div class="kpi-card text-center">
+                        <div class="kpi-icon animate__animated animate__pulse animate__infinite">🚑</div>
+                        <span class="kpi-label">Diagnostic</span>
+                        <h3 class="h5 mt-3 fw-bold">Analyse des Disparités</h3>
+                        <p class="text-muted small">Identifier les fragilités du système de santé révélées par la crise
+                            sanitaire et approfondir l'étude des inégalités territoriales.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal">
+                    <div class="kpi-card text-center">
+                        <div class="kpi-icon animate__animated animate__pulse animate__infinite animate__delay-1s">📊
+                        </div>
+                        <span class="kpi-label">Outils</span>
+                        <h3 class="h5 mt-3 fw-bold">Aide à la Décision</h3>
+                        <p class="text-muted small">Transformer les données complexes (DREES, INSEE) en indicateurs
+                            clairs pour orienter les politiques de santé publique locales.</p>
+                    </div>
+                </div>
+                <div class="col-md-4 reveal">
+                    <div class="kpi-card text-center">
+                        <div class="kpi-icon animate__animated animate__pulse animate__infinite animate__delay-2s">🏢
+                        </div>
+                        <span class="kpi-label">Impact</span>
+                        <h3 class="h5 mt-3 fw-bold">Cohésion Sociale</h3>
+                        <p class="text-muted small">Réduire les coûts liés aux déserts médicaux et améliorer l'accès aux
+                            soins pour les populations les plus vulnérables.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Context & Partners Section -->
+    <section class="py-5 bg-white">
+        <div class="container py-4">
+            <div class="row align-items-center">
+                <div class="col-lg-6 reveal">
+                    <h2 class="mb-4 text-primary">Un partenariat pour l'innovation</h2>
+                    <p class="lead">Porté par l'association <strong>Latitudes</strong>, ce projet explore le potentiel
+                        des données ouvertes pour la santé publique.</p>
+                    <p>En mobilisant la Data Science et les sciences sociales, nous créons des solutions interactives
+                        qui surpassent les rapports statiques traditionnels.</p>
+                    <ul class="list-unstyled">
+                        <li class="mb-3"><i class="fa-solid fa-check-circle text-emerald me-2"></i> <strong>Fiabilité
+                                :</strong> Diagnostic fondé sur des sources variées (INSEE, Assurance Maladie).</li>
+                        <li class="mb-3"><i class="fa-solid fa-check-circle text-emerald me-2"></i>
+                            <strong>Actionnabilité :</strong> Outils directement exploitables par les collectivités et
+                            les ARS.
+                        </li>
+                        <li class="mb-3"><i class="fa-solid fa-check-circle text-emerald me-2"></i> <strong>Innovation
+                                :</strong> Environnement collaboratif et reproductible via le SSP Cloud.</li>
+                    </ul>
+                </div>
+                <div class="col-lg-6 reveal">
+                    <div class="p-4 rounded-4 bg-light shadow-sm">
+                        <h4 class="text-primary mb-4 fw-bold">Impacts Multi-niveaux</h4>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <div class="p-3 bg-white rounded border-start border-4 border-primary h-100">
+                                    <h6 class="fw-bold mb-1">Économique</h6>
+                                    <p class="small text-muted mb-0">Allocation optimisée des ressources.</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 bg-white rounded border-start border-4 border-emerald h-100">
+                                    <h6 class="fw-bold mb-1">Social</h6>
+                                    <p class="small text-muted mb-0">Accès facilité aux soins.</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 bg-white rounded border-start border-4 border-info h-100">
+                                    <h6 class="fw-bold mb-1">Sociétal</h6>
+                                    <p class="small text-muted mb-0">Renforcement de la cohésion.</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="p-3 bg-white rounded border-start border-4 border-warning h-100">
+                                    <h6 class="fw-bold mb-1">Environnemental</h6>
+                                    <p class="small text-muted mb-0">Qualité du cadre de vie.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audience Section -->
+    <section class="py-5" style="background-color: #f1f8ff;">
+        <div class="container text-center reveal">
+            <h2 class="text-primary mb-5">Pour qui avons-nous conçu cet outil ?</h2>
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="p-4 bg-white rounded-4 shadow-sm h-100">
+                        <i class="fa-solid fa-city fa-3x text-primary mb-3"></i>
+                        <h6 class="fw-bold">Collectivités Locales</h6>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-4 bg-white rounded-4 shadow-sm h-100">
+                        <i class="fa-solid fa-hospital-user fa-3x text-primary mb-3"></i>
+                        <h6 class="fw-bold">Agences (ARS)</h6>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-4 bg-white rounded-4 shadow-sm h-100">
+                        <i class="fa-solid fa-user-doctor fa-3x text-primary mb-3"></i>
+                        <h6 class="fw-bold">Professionnels de Santé</h6>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="p-4 bg-white rounded-4 shadow-sm h-100">
+                        <i class="fa-solid fa-users-viewfinder fa-3x text-primary mb-3"></i>
+                        <h6 class="fw-bold">Citoyens</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h4 class="fw-bold text-white mb-4">Santé & Territoire</h4>
+                    <p class="footer-link">Plateforme dédiée à l'expertise territoriale et à la data-visualisation
+                        médicale pour l'accès aux soins.</p>
+                </div>
+                <div class="col-lg-2 offset-lg-2 col-6 mb-4 mb-lg-0">
+                    <h5 class="fw-bold text-white mb-3">Navigation</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html" class="footer-link">Accueil</a></li>
+                        <li><a href="cartographie.html" class="footer-link">Cartographie</a></li>
+                        <li><a href="analyse-mortalite.html" class="footer-link">Mortalité</a></li>
+                        <li><a href="resultats.html" class="footer-link">Résultats</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-6">
+                    <h5 class="fw-bold text-white mb-3">Contact</h5>
+                    <p class="footer-link mb-2"><i class="fa-solid fa-envelope me-2"></i> <a
+                            href="https://defis.data.gouv.fr/defis/sante-et-territoires">Sante-et-territoires.fr</a>
+                    </p>
+                    <p class="footer-link"><i class="fa-solid fa-location-dot me-2"></i> Limoges, France - Analyse
+                        Territoriale</p>
+                </div>
+            </div>
+            <hr class="mt-5 bg-secondary opacity-25">
+            <div class="text-center text-secondary small pt-3">
+                &copy; 2026 Santé & Territoire. Tous droits réservés.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle with Popper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="js/main.js"></script>
+</body>
+
+</html>
