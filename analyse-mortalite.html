@@ -34,6 +34,13 @@
             align-items: center;
             gap: 1rem;
         }
+
+        iframe {
+            width: 100%;
+            height: 75vh;
+            border: none;
+            border-radius: 15px;
+        }
     </style>
 </head>
 
@@ -72,12 +79,12 @@
     <div class="hero-section pb-5 pt-5 text-center">
         <div class="container pt-5 mt-4">
             <h1 class="animate__animated animate__fadeInDown">Rapports d'Analyse de la Mortalité</h1>
-            <p class="animate__animated animate__fadeInUp col-md-8 mx-auto opacity-75">Corrélation entre l'offre de
-                soins territoriale et les indicateurs de santé publique (mortalité standardisée, causes de décès).</p>
+            <p class="animate__animated animate__fadeInUp col-md-8 mx-auto opacity-75">Visualisations dynamiques
+                générées par Python pour corréler offre de soins et indicateurs de santé publique.</p>
         </div>
     </div>
 
-    <!-- Power BI Reports Container -->
+    <!-- Main Content Container -->
     <div class="container pt-4 pb-5">
         <div class="row">
             <div class="col-12 reveal">
@@ -85,45 +92,107 @@
                     <div class="report-header">
                         <i class="fa-solid fa-chart-pie text-primary fa-2x"></i>
                         <div>
-                            <h4 class="mb-0 fw-bold">Power BI Export Report</h4>
-                            <p class="text-muted small mb-0">Mise à jour : Janvier 2026 | Source : INSEE / CépiDc</p>
+                            <h4 class="mb-0 fw-bold">Dashboard de Mortalité Territorial</h4>
+                            <p class="text-muted small mb-0">Données exploitées via Python | Mise à jour : 2026</p>
                         </div>
                     </div>
 
                     <div class="position-relative">
-                        <!-- Loader -->
+                        <!-- Loader (Hidden when loaded via JS in main.js) -->
                         <div class="loader-wrapper">
                             <div class="spinner-medical mx-auto mb-3"></div>
-                            <p class="text-muted small">Connexion sécurisée aux serveurs Power BI...</p>
+                            <p class="text-muted small">Initialisation des visualisations...</p>
                         </div>
 
-                        <!-- Iframe (Power BI Embed) -->
-                        <!-- REPLACE the SRC with your Power BI Embed Link -->
-                        <iframe title="Rapport Mortalité"
-                            src="https://app.powerbi.com/view?r=eyJrIjoiTVZ_REPLACE_THIS_WITH_YOUR_LINK" frameborder="0"
-                            allowFullScreen="true" class="animate__animated animate__fadeIn"></iframe>
+                        <!-- Internal HTML Dashboard -->
+                        <iframe title="Analyse de Mortalité" src="dashboard_mortalite.html" allowFullScreen="true"
+                            class="animate__animated animate__fadeIn"></iframe>
                     </div>
                 </div>
             </div>
         </div>
 
+        <!-- Key Metrics Cards -->
         <div class="row mt-5">
             <div class="col-lg-4 mb-4 reveal">
-                <div class="kpi-card text-center p-4">
+                <div class="kpi-card text-center p-4 h-100">
+                    <div class="bg-light rounded-circle p-3 mx-auto mb-3" style="width: 70px;">
+                        <i class="fa-solid fa-hourglass-half text-primary fa-xl"></i>
+                    </div>
                     <h5 class="text-primary fw-bold">Mortalité Évitable</h5>
-                    <p class="text-muted">Étude des décès survenus avant 65 ans.</p>
+                    <p class="text-muted small">Analyse des décès survenus avant 65 ans dont la cause peut être prévenue
+                        ou traitée par le système de santé local.</p>
                 </div>
             </div>
             <div class="col-lg-4 mb-4 reveal">
-                <div class="kpi-card text-center p-4">
+                <div class="kpi-card text-center p-4 h-100">
+                    <div class="bg-light rounded-circle p-3 mx-auto mb-3" style="width: 70px;">
+                        <i class="fa-solid fa-location-crosshairs text-primary fa-xl"></i>
+                    </div>
                     <h5 class="text-primary fw-bold">Disparités Régionales</h5>
-                    <p class="text-muted">Comparaisons inter-régionales normalisées.</p>
+                    <p class="text-muted small">Les zones en "sous-densité médicale" affichent une corrélation directe
+                        avec un taux de mortalité standardisé plus élevé.</p>
                 </div>
             </div>
             <div class="col-lg-4 mb-4 reveal">
-                <div class="kpi-card text-center p-4">
-                    <h5 class="text-primary fw-bold">Facteurs de Risques</h5>
-                    <p class="text-muted">Variables socio-économiques impactantes.</p>
+                <div class="kpi-card text-center p-4 h-100">
+                    <div class="bg-light rounded-circle p-3 mx-auto mb-3" style="width: 70px;">
+                        <i class="fa-solid fa-dna text-primary fa-xl"></i>
+                    </div>
+                    <h5 class="text-primary fw-bold">Facteurs Sociaux</h5>
+                    <p class="text-muted small">Intégration d'indicateurs liés à la précarité pour comprendre les
+                        disparités territoriales de santé.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interpretations & Guidance Section -->
+        <div class="row mt-4 reveal">
+            <div class="col-12">
+                <div class="bg-white p-5 rounded-4 border-start border-5 border-emerald shadow-sm">
+                    <h3 class="fw-bold mb-4">Interprétations & Aide à la Lecture</h3>
+                    <div class="row g-4">
+                        <div class="col-md-6">
+                            <h5 class="fw-bold text-primary"><i class="fa-solid fa-magnifying-glass-chart me-2"></i>
+                                Comment interpréter ces graphes ?</h5>
+                            <p class="text-muted">Chaque zone coloriée sur la carte reflète l'écart à la moyenne
+                                nationale. Une zone tendant vers le <strong>rouge</strong> indique une surmortalité
+                                significative qui interroge directement l'accessibilité aux structures de soins
+                                primaires.</p>
+                            <p class="text-muted">L'usage de <strong>Python</strong> nous permet d'isoler des
+                                corrélations fines entre l'éloignement géographique des médecins et les types de
+                                pathologies enregistrées (causes de décès).</p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5 class="fw-bold text-primary"><i class="fa-solid fa-lightbulb me-2"></i> Aperçus de
+                                l'Analyse</h5>
+                            <ul class="list-unstyled">
+                                <li class="mb-3 d-flex gap-3">
+                                    <span
+                                        class="badge bg-emerald rounded-pill d-flex align-items-center justify-content-center"
+                                        style="width: 25px; height: 25px;">!</span>
+                                    <span class="text-muted small">Les disparités de mortalité ne sont pas uniquement
+                                        biologiques mais fortement <strong>géographiques</strong>.</span>
+                                </li>
+                                <li class="mb-3 d-flex gap-3">
+                                    <span
+                                        class="badge bg-emerald rounded-pill d-flex align-items-center justify-content-center"
+                                        style="width: 25px; height: 25px;">!</span>
+                                    <span class="text-muted small">On observe une réduction de la mortalité évitable
+                                        dans les zones ayant investi dans des <strong>Maisons de Santé
+                                            pluriprofessionnelles</strong>.</span>
+                                </li>
+                                <li class="mb-3 d-flex gap-3">
+                                    <span
+                                        class="badge bg-emerald rounded-pill d-flex align-items-center justify-content-center"
+                                        style="width: 25px; height: 25px;">!</span>
+                                    <span class="text-muted small">L'analyse de données permet d'anticiper les
+                                        <strong>futurs déserts médicaux</strong> avant qu'ils n'impactent la santé
+                                        publique locale.</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -132,7 +201,7 @@
     <!-- Footer -->
     <footer class="footer mt-auto">
         <div class="container text-center text-secondary small">
-            &copy; 2026 Santé & Territoire. Analyse Mortalité & Power BI.
+            &copy; 2026 Santé & Territoire. Analyse Mortalité & Dashboard Python.
         </div>
     </footer>
 
