@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_857a66385f278d9fa5d76903ed809b63 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <!-- Panneau filtres -->
+    <div id="filter-panel" style="
+        position:fixed; top:10px; left:50px; width:260px;
+        background:white; padding:16px; z-index:9999;
+        border-radius:10px; box-shadow:0 2px 20px rgba(0,0,0,0.18);
+        font-family:'Segoe UI',Arial,sans-serif; font-size:13px;">
+        <h4 style="margin:0 0 12px 0; font-size:14px; color:#222;">🗂 Filtres</h4>
+
+        <label style="font-weight:600; display:block; margin-bottom:4px;">Professionnel</label>
+        <select id="metier-select" style="width:100%; margin-bottom:12px; padding:5px; border-radius:6px; border:1px solid #ccc;"
+                onchange="onMetierChange()">
+            <option value="Généralistes">Généralistes</option>
+            <option value="Infirmiers">Infirmiers</option>
+            <option value="Kinés">Kinés</option>
+            <option value="Sages-Femmes">Sages-Femmes</option>
+        </select>
+
+        <label style="font-weight:600; display:block; margin-bottom:4px;">Département</label>
+        <select id="dept-select" style="width:100%; margin-bottom:12px; padding:5px; border-radius:6px; border:1px solid #ccc;"
+                onchange="applyFilters()">
+            <option value="">— Tous —</option>
+        </select>
+
+        <label style="font-weight:600; display:block; margin-bottom:4px;">
+            Population min : <span id="pop-val">0</span> hab.
+        </label>
+        <input type="range" id="pop-range" min="0" max="50000" value="0" step="500"
+               style="width:100%; margin-bottom:4px;" oninput="onPopInput()" onchange="applyFilters()">
+
+        <label style="font-weight:600; display:block; margin-bottom:4px; margin-top:8px;">Commune (zoom)</label>
+        <select id="commune-select" style="width:100%; padding:5px; border-radius:6px; border:1px solid #ccc;"
+                onchange="zoomToCommune()">
+            <option value="">— Choisir —</option>
+        </select>
+
+        <div id="stats-bar" style="margin-top:12px; font-size:11px; color:#555; border-top:1px solid #eee; padding-top:8px;">
+            Chargement…
+        </div>
+    </div>
+
+    <!-- Légende dynamique -->
+    <div id="dynamic-legend" style="
+        position:fixed; bottom:30px; left:20px; width:170px;
+        background:white; padding:12px; z-index:9999;
+        border-radius:10px; box-shadow:0 2px 12px rgba(0,0,0,0.15);
+        font-family:'Segoe UI',Arial,sans-serif;">
+        <b id="leg-title" style="font-size:13px;">Généralistes</b>
+        <div style="font-size:12px; margin-top:6px;">
+            <span style="color:#e74c3c; font-size:16px;">●</span>
+            Déficit ≤ <span id="leg-seuil-red">2.5</span>
+        </div>
+        <div style="font-size:12px; margin-top:2px;">
+            <span style="color:#27ae60; font-size:16px;">●</span>
+            OK > <span id="leg-seuil-green">2.5</span>
+        </div>
+        <div style="font-size:12px; margin-top:2px;">
+            <span style="color:#aaa; font-size:16px;">●</span>
+            Donnée absente
+        </div>
+    </div>
+    
+    
+<script>
+// ── Configuration ──────────────────────────────────────────────
+var SEUILS     = {"G\u00e9n\u00e9ralistes": 2.5, "Infirmiers": 78.2, "Kin\u00e9s": 48.9, "Sages-Femmes": 9.5};
+var MAP        = null;
+var allData    = [];       // tableau plat de toutes les communes
+var deptIndex  = {};      // dept → [indices]
+var geoLayer   = null;     // L.geoJSON courant
+var currentMetier = "Généralistes";
+var currentDept   = "";
+var currentMinPop = 0;
+
+// Renderer Canvas partagé (critique pour 36k points)
+var canvasRenderer = null;
+
+// ── Init au chargement ─────────────────────────────────────────
+window.onload = function() {
+    MAP = map_857a66385f278d9fa5d76903ed809b63;
+    canvasRenderer = L.canvas({ padding: 0.5 });
+
+    fetch("communes_apl.geojson")
+        .then(r => r.json())
+        .then(geojson => {
+            // Construire l'index plat
+            allData = geojson.features.map(f => f.properties);
+
+            // Index département
+            allData.forEach((d, i) => {
+                if (!deptIndex[d.dept]) deptIndex[d.dept] = [];
+                deptIndex[d.dept].push(i);
+            });
+
+            // Peupler le select département
+            var ds = document.getElementById('dept-select');
+            Object.keys(deptIndex).sort().forEach(dep => {
+                ds.innerHTML += `<option value="${dep}">${dep}</option>`;
+            });
+
+            // Premier rendu
+            renderLayer(geojson);
+            updateStats();
+        });
+};
+
+// ── Rendu GeoJSON optimisé (Canvas + filtre natif) ─────────────
+function renderLayer(geojson) {
+    if (geoLayer) MAP.removeLayer(geoLayer);
+
+    var seuil = SEUILS[currentMetier];
+    var aplKey = 'apl_' + currentMetier;
+
+    geoLayer = L.geoJSON(geojson, {
+        renderer: canvasRenderer,
+
+        // ← filtre natif Leaflet : Leaflet lui-même skip les features
+        filter: function(feature) {
+            var p = feature.properties;
+            if (currentDept   && p.dept !== currentDept) return false;
+            if (p.pop < currentMinPop)                   return false;
+            return true;
+        },
+
+        pointToLayer: function(feature, latlng) {
+            var apl   = feature.properties[aplKey];
+            var color = apl < 0 ? '#aaa' : (apl <= seuil ? '#e74c3c' : '#27ae60');
+            return L.circleMarker(latlng, {
+                radius:      4,
+                color:       color,
+                fillColor:   color,
+                fillOpacity: 0.75,
+                weight:      0,
+                renderer:    canvasRenderer
+            });
+        },
+
+        onEachFeature: function(feature, layer) {
+            var p   = feature.properties;
+            var apl = p[aplKey];
+            var s   = SEUILS[currentMetier];
+            var col = apl < 0 ? '#aaa' : (apl <= s ? '#e74c3c' : '#27ae60');
+            var aplTxt = apl < 0 ? '<i>Non disponible</i>' : apl.toFixed(2);
+            layer.bindPopup(
+                `<div style="font-family:'Segoe UI',Arial;min-width:200px">
+                    <b style="font-size:14px">${p.nom}</b>
+                    <div style="color:#777;font-size:11px">Dept ${p.dept} · INSEE ${p.insee}</div>
+                    <div style="font-size:11px">Population : <b>${p.pop.toLocaleString()}</b> hab.</div>
+                    <hr style="margin:6px 0">
+                    <div>APL <b>${currentMetier}</b> :
+                        <span style="color:${col};font-weight:bold;font-size:15px"> ${aplTxt}</span>
+                    </div>
+                    <div style="font-size:10px;color:#999;margin-top:4px">Seuil : ${s}</div>
+                 </div>`,
+                { maxWidth: 240 }
+            );
+        }
+    });
+
+    geoLayer.addTo(MAP);
+    updateStats();
+    updateCommuneList();
+}
+
+// ── Appliquer filtres (re-render rapide via filter natif) ───────
+function applyFilters() {
+    currentDept   = document.getElementById('dept-select').value;
+    currentMinPop = parseInt(document.getElementById('pop-range').value);
+
+    // On ne refait pas fetch — on re-render depuis les données déjà en mémoire
+    if (!geoLayer) return;
+    if (geoLayer) MAP.removeLayer(geoLayer);
+
+    var seuil  = SEUILS[currentMetier];
+    var aplKey = 'apl_' + currentMetier;
+
+    geoLayer = L.geoJSON({type:"FeatureCollection", features: window._cachedFeatures}, {
+        renderer: canvasRenderer,
+        filter: function(feature) {
+            var p = feature.properties;
+            if (currentDept   && p.dept !== currentDept) return false;
+            if (p.pop < currentMinPop)                   return false;
+            return true;
+        },
+        pointToLayer: function(feature, latlng) {
+            var apl   = feature.properties[aplKey];
+            var color = apl < 0 ? '#aaa' : (apl <= seuil ? '#e74c3c' : '#27ae60');
+            return L.circleMarker(latlng, {
+                radius: 4, color: color, fillColor: color,
+                fillOpacity: 0.75, weight: 0, renderer: canvasRenderer
+            });
+        },
+        onEachFeature: function(feature, layer) {
+            var p   = feature.properties;
+            var apl = p[aplKey];
+            var s   = SEUILS[currentMetier];
+            var col = apl < 0 ? '#aaa' : (apl <= s ? '#e74c3c' : '#27ae60');
+            var aplTxt = apl < 0 ? '<i>Non disponible</i>' : apl.toFixed(2);
+            layer.bindPopup(
+                `<div style="font-family:'Segoe UI',Arial;min-width:200px">
+                    <b style="font-size:14px">${p.nom}</b>
+                    <div style="color:#777;font-size:11px">Dept ${p.dept} · INSEE ${p.insee}</div>
+                    <div style="font-size:11px">Population : <b>${p.pop.toLocaleString()}</b> hab.</div>
+                    <hr style="margin:6px 0">
+                    <div>APL <b>${currentMetier}</b> :
+                        <span style="color:${col};font-weight:bold;font-size:15px"> ${aplTxt}</span>
+                    </div>
+                    <div style="font-size:10px;color:#999;margin-top:4px">Seuil : ${s}</div>
+                 </div>`,
+                { maxWidth: 240 }
+            );
+        }
+    }).addTo(MAP);
+
+    updateStats();
+    updateCommuneList();
+}
+
+// ── Garde les features en cache après le 1er fetch ─────────────
+function renderLayer(geojson) {
+    window._cachedFeatures = geojson.features;  // cache mémoire
+    if (geoLayer) MAP.removeLayer(geoLayer);
+
+    var seuil  = SEUILS[currentMetier];
+    var aplKey = 'apl_' + currentMetier;
+
+    geoLayer = L.geoJSON(geojson, {
+        renderer: canvasRenderer,
+        filter: function(feature) {
+            var p = feature.properties;
+            if (currentDept   && p.dept !== currentDept) return false;
+            if (p.pop < currentMinPop)                   return false;
+            return true;
+        },
+        pointToLayer: function(feature, latlng) {
+            var apl   = feature.properties[aplKey];
+            var color = apl < 0 ? '#aaa' : (apl <= seuil ? '#e74c3c' : '#27ae60');
+            return L.circleMarker(latlng, {
+                radius: 4, color: color, fillColor: color,
+                fillOpacity: 0.75, weight: 0, renderer: canvasRenderer
+            });
+        },
+        onEachFeature: function(feature, layer) {
+            var p   = feature.properties;
+            var apl = p[aplKey];
+            var s   = SEUILS[currentMetier];
+            var col = apl < 0 ? '#aaa' : (apl <= s ? '#e74c3c' : '#27ae60');
+            var aplTxt = apl < 0 ? '<i>Non disponible</i>' : apl.toFixed(2);
+            layer.bindPopup(
+                `<div style="font-family:'Segoe UI',Arial;min-width:200px">
+                    <b style="font-size:14px">${p.nom}</b>
+                    <div style="color:#777;font-size:11px">Dept ${p.dept} · INSEE ${p.insee}</div>
+                    <div style="font-size:11px">Population : <b>${p.pop.toLocaleString()}</b> hab.</div>
+                    <hr style="margin:6px 0">
+                    <div>APL <b>${currentMetier}</b> :
+                        <span style="color:${col};font-weight:bold;font-size:15px"> ${aplTxt}</span>
+                    </div>
+                    <div style="font-size:10px;color:#999;margin-top:4px">Seuil : ${s}</div>
+                 </div>`,
+                { maxWidth: 240 }
+            );
+        }
+    }).addTo(MAP);
+
+    updateStats();
+    updateCommuneList();
+}
+
+// ── Changement de métier ───────────────────────────────────────
+function onMetierChange() {
+    currentMetier = document.getElementById('metier-select').value;
+    var s = SEUILS[currentMetier];
+    document.getElementById('leg-title').innerText      = currentMetier;
+    document.getElementById('leg-seuil-red').innerText  = s;
+    document.getElementById('leg-seuil-green').innerText = s;
+    applyFilters();
+}
+
+// ── Slider population (debounce visuel) ───────────────────────
+var popTimer = null;
+function onPopInput() {
+    document.getElementById('pop-val').innerText =
+        parseInt(document.getElementById('pop-range').value).toLocaleString();
+    clearTimeout(popTimer);
+    popTimer = setTimeout(applyFilters, 300);
+}
+
+// ── Stats affichées ────────────────────────────────────────────
+function updateStats() {
+    if (!window._cachedFeatures) return;
+    var visible = window._cachedFeatures.filter(f => {
+        var p = f.properties;
+        return (!currentDept || p.dept === currentDept) && p.pop >= currentMinPop;
+    }).length;
+    document.getElementById('stats-bar').innerHTML =
+        `<b>${visible.toLocaleString()}</b> communes affichées sur ${allData.length.toLocaleString()}`;
+}
+
+// ── Liste communes (limitée à 300 pour le select) ──────────────
+function updateCommuneList() {
+    if (!allData.length) return;
+    var cs = document.getElementById('commune-select');
+    cs.innerHTML = '<option value="">— Choisir —</option>';
+    allData
+        .filter(d => (!currentDept || d.dept === currentDept) && d.pop >= currentMinPop)
+        .sort((a, b) => a.nom.localeCompare(b.nom))
+        .slice(0, 300)
+        .forEach(d => {
+            // Les coordonnées sont dans le GeoJSON — on les récupère via _cachedFeatures
+            var feat = window._cachedFeatures.find(f => f.properties.insee === d.insee);
+            if (feat) {
+                var lon = feat.geometry.coordinates[0];
+                var lat = feat.geometry.coordinates[1];
+                cs.innerHTML += `<option value="${lat},${lon}">${d.nom}</option>`;
+            }
+        });
+}
+
+function zoomToCommune() {
+    var v = document.getElementById('commune-select').value;
+    if (v) {
+        var c = v.split(',');
+        MAP.flyTo([parseFloat(c[0]), parseFloat(c[1])], 13, {animate: true, duration: 1});
+    }
+}
+</script>
+    
+            <div class="folium-map" id="map_857a66385f278d9fa5d76903ed809b63" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_857a66385f278d9fa5d76903ed809b63 = L.map(
+                "map_857a66385f278d9fa5d76903ed809b63",
+                {
+                    center: [46.5, 2.5],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 6,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_98150dcab7325be4c4c2286dbc1e1954 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_98150dcab7325be4c4c2286dbc1e1954.addTo(map_857a66385f278d9fa5d76903ed809b63);
+        
+</script>
+</html>
