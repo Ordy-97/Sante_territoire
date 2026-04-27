@@ -23,9 +23,10 @@
             border-radius: 30px;
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
             border: 1px solid rgba(0, 0, 0, 0.05);
-            padding: 1rem;
+            padding: 1rem 0;
             position: relative;
-            min-height: 80vh;
+            min-height: 90vh;
+            /* Augmenté pour le dashboard */
         }
 
         .report-header {
@@ -37,7 +38,8 @@
 
         iframe {
             width: 100%;
-            height: 75vh;
+            height: 1400px;
+            /* Taille augmentée pour voir tout le dashboard */
             border: none;
             border-radius: 15px;
         }
@@ -78,14 +80,19 @@
     <!-- Header Section -->
     <div class="hero-section pb-5 pt-5 text-center">
         <div class="container pt-5 mt-4">
-            <h1 class="animate__animated animate__fadeInDown">Rapports d'Analyse de la Mortalité</h1>
-            <p class="animate__animated animate__fadeInUp col-md-8 mx-auto opacity-75">Visualisations dynamiques
-                générées par Python pour corréler offre de soins et indicateurs de santé publique.</p>
+            <h1 class="animate__animated animate__fadeInDown">Profil de la Mortalité & Territoires</h1>
+            <p class="animate__animated animate__fadeInUp col-md-10 mx-auto opacity-75">
+                "Les chiffres de la mortalité ne sont pas une fatalité géographique. En analysant les causes de décès en
+                2019 à travers le prisme des taux standardisés, nous levons le voile sur l'impact réel de l'organisation
+                des soins sur notre santé. Cette page croise les données du CépiDc avec notre étude de l'Accessibilité
+                Potentielle Localisée (APL) pour répondre à une question simple : la distance au soignant réduit-elle
+                nos chances de survie ?"
+            </p>
         </div>
     </div>
 
     <!-- Main Content Container -->
-    <div class="container pt-4 pb-5">
+    <div class="container-fluid px-lg-5 pt-4 pb-5">
         <div class="row">
             <div class="col-12 reveal">
                 <div class="powerbi-card">
@@ -109,88 +116,116 @@
                             class="animate__animated animate__fadeIn"></iframe>
                     </div>
                 </div>
+
+                <!-- Download Report Action -->
+                <div class="text-center mt-4 mb-5 animate__animated animate__fadeInUp">
+                    <button class="btn btn-emerald btn-lg px-5 py-3 rounded-pill shadow"
+                        onclick="alert('Le rapport d\'analyse PDF sera bientôt disponible.')">
+                        <i class="fa-solid fa-file-pdf me-2"></i> Télécharger le rapport d'analyse complet
+                    </button>
+                    <p class="text-muted small mt-2">Synthèse détaillée des corrélations APL / Mortalité</p>
+                </div>
             </div>
         </div>
 
-        <!-- Key Metrics Cards -->
-        <div class="row mt-5">
-            <div class="col-lg-4 mb-4 reveal">
-                <div class="kpi-card text-center p-4 h-100">
-                    <div class="bg-light rounded-circle p-3 mx-auto mb-3" style="width: 70px;">
-                        <i class="fa-solid fa-hourglass-half text-primary fa-xl"></i>
+        <!-- New Interpretation Axes -->
+        <div class="row mt-2 g-4">
+            <!-- AXE 1 -->
+            <div class="col-lg-6 reveal">
+                <div class="kpi-card p-5 h-100 bg-white">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-light rounded-circle p-3 me-3">
+                            <i class="fa-solid fa-biohazard text-primary fa-2x"></i>
+                        </div>
+                        <h4 class="text-primary fw-bold mb-0">1. Le "Poids" des Tumeurs & Maladies Circulatoires</h4>
                     </div>
-                    <h5 class="text-primary fw-bold">Mortalité Évitable</h5>
-                    <p class="text-muted small">Analyse des décès survenus avant 65 ans dont la cause peut être prévenue
-                        ou traitée par le système de santé local.</p>
+                    <p class="text-muted">Les tumeurs et les maladies de l'appareil circulatoire dominent largement les
+                        statistiques. Ce sont les deux "tueurs" principaux en France.</p>
+                    <p class="text-muted border-start border-4 border-primary ps-3 small">
+                        <strong>Lien APL :</strong> Un accès limité aux généralistes et aux infirmiers (faible APL)
+                        retarde la détection des tumeurs et fragilise le suivi des patients cardiaques, augmentant ainsi
+                        le taux de décès évitables.
+                    </p>
                 </div>
             </div>
-            <div class="col-lg-4 mb-4 reveal">
-                <div class="kpi-card text-center p-4 h-100">
-                    <div class="bg-light rounded-circle p-3 mx-auto mb-3" style="width: 70px;">
-                        <i class="fa-solid fa-location-crosshairs text-primary fa-xl"></i>
+            <!-- AXE 2 -->
+            <div class="col-lg-6 reveal">
+                <div class="kpi-card p-5 h-100 bg-white">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-light rounded-circle p-3 me-3">
+                            <i class="fa-solid fa-scale-balanced text-primary fa-2x"></i>
+                        </div>
+                        <h4 class="text-primary fw-bold mb-0">2. Le Taux Standardisé : Égalité Statistique</h4>
                     </div>
-                    <h5 class="text-primary fw-bold">Disparités Régionales</h5>
-                    <p class="text-muted small">Les zones en "sous-densité médicale" affichent une corrélation directe
-                        avec un taux de mortalité standardisé plus élevé.</p>
+                    <p class="text-muted">Nous n'utilisons pas de nombres bruts car certains départements sont plus
+                        "vieux". Le taux standardisé permet de comparer le Cher et Paris comme s'ils avaient la même
+                        structure d'âge.</p>
+                    <p class="text-muted border-start border-4 border-primary ps-3 small">
+                        <strong>Le Message :</strong> Si le taux est plus élevé en zone rurale, ce n'est pas par
+                        vieillissement, mais parce que le risque de mourir d'une maladie donnée y est réellement plus
+                        fort.
+                    </p>
                 </div>
             </div>
-            <div class="col-lg-4 mb-4 reveal">
-                <div class="kpi-card text-center p-4 h-100">
-                    <div class="bg-light rounded-circle p-3 mx-auto mb-3" style="width: 70px;">
-                        <i class="fa-solid fa-dna text-primary fa-xl"></i>
+            <!-- AXE 3 -->
+            <div class="col-lg-6 reveal">
+                <div class="kpi-card p-5 h-100 bg-white">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-light rounded-circle p-3 me-3">
+                            <i class="fa-solid fa-person-falling text-primary fa-2x"></i>
+                        </div>
+                        <h4 class="text-primary fw-bold mb-0">3. Causes Externes & Prévention</h4>
                     </div>
-                    <h5 class="text-primary fw-bold">Facteurs Sociaux</h5>
-                    <p class="text-muted small">Intégration d'indicateurs liés à la précarité pour comprendre les
-                        disparités territoriales de santé.</p>
+                    <p class="text-muted">La mortalité par chute ou accident est un marqueur fort de la perte
+                        d'autonomie. C'est une mine d'or pour l'analyse territoriale et la prévention.</p>
+                    <p class="text-muted border-start border-4 border-primary ps-3 small">
+                        <strong>Lien APL :</strong> On observe une corrélation entre la pénurie de kinésithérapeutes et
+                        la hausse des décès par chute. Sans rééducation, l'accident domestique devient souvent fatal.
+                    </p>
+                </div>
+            </div>
+            <!-- AXE 4 -->
+            <div class="col-lg-6 reveal">
+                <div class="kpi-card p-5 h-100 bg-white">
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-light rounded-circle p-3 me-3">
+                            <i class="fa-solid fa-hand-holding-medical text-primary fa-2x"></i>
+                        </div>
+                        <h4 class="text-primary fw-bold mb-0">4. La Fracture Territoriale</h4>
+                    </div>
+                    <p class="text-muted">Le dashboard révèle des disparités flagrantes : à âge égal, on meurt plus de
+                        maladies respiratoires dans le Nord ou l'Est que dans le Sud.</p>
+                    <p class="text-muted border-start border-4 border-primary ps-3 small">
+                        <strong>Le Message :</strong> Cette géographie de la mortalité se superpose à celle de l'offre
+                        de soins. Là où l'APL est au plus bas, le système ne joue plus son rôle de bouclier.
+                    </p>
                 </div>
             </div>
         </div>
 
         <!-- Interpretations & Guidance Section -->
-        <div class="row mt-4 reveal">
+        <div class="row mt-5 reveal">
             <div class="col-12">
                 <div class="bg-white p-5 rounded-4 border-start border-5 border-emerald shadow-sm">
                     <h3 class="fw-bold mb-4">Interprétations & Aide à la Lecture</h3>
                     <div class="row g-4">
                         <div class="col-md-6">
                             <h5 class="fw-bold text-primary"><i class="fa-solid fa-magnifying-glass-chart me-2"></i>
-                                Comment interpréter ces graphes ?</h5>
-                            <p class="text-muted">Chaque zone coloriée sur la carte reflète l'écart à la moyenne
-                                nationale. Une zone tendant vers le <strong>rouge</strong> indique une surmortalité
-                                significative qui interroge directement l'accessibilité aux structures de soins
-                                primaires.</p>
-                            <p class="text-muted">L'usage de <strong>Python</strong> nous permet d'isoler des
-                                corrélations fines entre l'éloignement géographique des médecins et les types de
-                                pathologies enregistrées (causes de décès).</p>
+                                Lecture des Graphiques</h5>
+                            <p class="text-muted">La <strong>Carte de Répartition</strong> affiche la proportion des
+                                décès par département (Taux standardisé). Les zones plus denses indiquent une
+                                vulnérabilité accrue qui doit être croisée avec l'offre de soins (APL).</p>
+                            <p class="text-muted">Le graphique des <strong>Causes de Mortalité</strong> permet de
+                                prioriser les politiques de santé publique en fonction des réalités pathologiques du
+                                territoire.</p>
                         </div>
                         <div class="col-md-6">
-                            <h5 class="fw-bold text-primary"><i class="fa-solid fa-lightbulb me-2"></i> Aperçus de
-                                l'Analyse</h5>
-                            <ul class="list-unstyled">
-                                <li class="mb-3 d-flex gap-3">
-                                    <span
-                                        class="badge bg-emerald rounded-pill d-flex align-items-center justify-content-center"
-                                        style="width: 25px; height: 25px;">!</span>
-                                    <span class="text-muted small">Les disparités de mortalité ne sont pas uniquement
-                                        biologiques mais fortement <strong>géographiques</strong>.</span>
-                                </li>
-                                <li class="mb-3 d-flex gap-3">
-                                    <span
-                                        class="badge bg-emerald rounded-pill d-flex align-items-center justify-content-center"
-                                        style="width: 25px; height: 25px;">!</span>
-                                    <span class="text-muted small">On observe une réduction de la mortalité évitable
-                                        dans les zones ayant investi dans des <strong>Maisons de Santé
-                                            pluriprofessionnelles</strong>.</span>
-                                </li>
-                                <li class="mb-3 d-flex gap-3">
-                                    <span
-                                        class="badge bg-emerald rounded-pill d-flex align-items-center justify-content-center"
-                                        style="width: 25px; height: 25px;">!</span>
-                                    <span class="text-muted small">L'analyse de données permet d'anticiper les
-                                        <strong>futurs déserts médicaux</strong> avant qu'ils n'impactent la santé
-                                        publique locale.</span>
-                                </li>
-                            </ul>
+                            <h5 class="fw-bold text-primary"><i class="fa-solid fa-lightbulb me-2"></i> Guide
+                                d'Histoires</h5>
+                            <p class="text-muted">Nos analyses montrent que la distance au soignant est un facteur de
+                                survie. En utilisant les filtres du dashboard, vous pouvez observer comment le déficit
+                                en spécialistes (Kinésithérapeutes, Cardiologues) se traduit par des hausses de
+                                mortalité évitables sur votre région.</p>
                         </div>
                     </div>
                 </div>
@@ -207,6 +242,20 @@
 
     <!-- Bootstrap Bundle with Popper JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Transmettre les paramètres d'URL (ex: departement) à l'iframe du dashboard
+        document.addEventListener("DOMContentLoaded", function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const dept = urlParams.get('departement');
+
+            if (dept) {
+                const iframe = document.querySelector('iframe[src="dashboard_mortalite.html"]');
+                if (iframe) {
+                    iframe.src = 'dashboard_mortalite.html?departement=' + encodeURIComponent(dept);
+                }
+            }
+        });
+    </script>
     <!-- Custom JS -->
     <script src="js/main.js"></script>
 </body>

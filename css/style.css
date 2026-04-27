@@ -3,19 +3,23 @@
 
 :root {
     /* Color Palette */
-    --primary-blue: #1a508b;       /* Deep Medical Blue */
-    --secondary-blue: #e1f5fe;     /* Light Blue / Cyan */
-    --accent-emerald: #2ecc71;     /* Health / Validation */
-    --accent-coral: #e74c3c;       /* Alerts / Deserts */
+    --primary-blue: #1a508b;
+    /* Deep Medical Blue */
+    --secondary-blue: #e1f5fe;
+    /* Light Blue / Cyan */
+    --accent-emerald: #2ecc71;
+    /* Health / Validation */
+    --accent-coral: #e74c3c;
+    /* Alerts / Deserts */
     --text-dark: #2c3e50;
     --text-light: #ecf0f1;
     --background-gray: #f8f9fa;
     --glass-background: rgba(255, 255, 255, 0.85);
-    
+
     /* Typography */
     --font-primary: 'Inter', sans-serif;
     --font-heading: 'Montserrat', sans-serif;
-    
+
     /* Transitions */
     --transition-smooth: all 0.3s ease;
 }
@@ -28,7 +32,11 @@ body {
     overflow-x: hidden;
 }
 
-h1, h2, h3, h4, .navbar-brand {
+h1,
+h2,
+h3,
+h4,
+.navbar-brand {
     font-family: var(--font-heading);
     font-weight: 700;
 }
@@ -75,7 +83,8 @@ h1, h2, h3, h4, .navbar-brand {
     transform: translateX(-50%);
 }
 
-.nav-link:hover::after, .nav-link.active::after {
+.nav-link:hover::after,
+.nav-link.active::after {
     width: 80%;
 }
 
@@ -117,7 +126,7 @@ h1, h2, h3, h4, .navbar-brand {
     border-radius: 20px;
     padding: 2.5rem;
     border: none;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
     transition: var(--transition-smooth);
     height: 100%;
     position: relative;
@@ -126,7 +135,7 @@ h1, h2, h3, h4, .navbar-brand {
 
 .kpi-card:hover {
     transform: translateY(-10px);
-    box-shadow: 0 15px 50px rgba(0,0,0,0.1);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
 }
 
 .kpi-icon {
@@ -156,7 +165,7 @@ h1, h2, h3, h4, .navbar-brand {
     background: white;
     border-radius: 20px;
     padding: 1rem;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.12);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
     margin-top: -50px;
     position: relative;
     z-index: 10;
@@ -189,8 +198,13 @@ iframe {
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Footer */
@@ -201,7 +215,7 @@ footer {
 }
 
 .footer-link {
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
     text-decoration: none;
     transition: var(--transition-smooth);
 }
@@ -211,9 +225,17 @@ footer {
 }
 
 /* Utils */
-.text-emerald { color: var(--accent-emerald); }
-.text-coral { color: var(--accent-coral); }
-.bg-deep-blue { background: var(--primary-blue); }
+.text-emerald {
+    color: var(--accent-emerald);
+}
+
+.text-coral {
+    color: var(--accent-coral);
+}
+
+.bg-deep-blue {
+    background: var(--primary-blue);
+}
 
 /* Animation Classes */
 .reveal {
@@ -227,6 +249,38 @@ footer {
     transform: translateY(0);
 }
 
+/* Custom Utility Classes */
+.x-small {
+    font-size: 0.75rem;
+}
+
+.btn-xs {
+    padding: 0.1rem 0.25rem;
+    font-size: 0.7rem;
+}
+
+/* Custom Flush Accordion for Sidebars */
+.custom-accordion .accordion-item {
+    background: #f8f9fa;
+    border-radius: 8px !important;
+}
+
+.custom-accordion .accordion-button {
+    background: transparent;
+    box-shadow: none !important;
+}
+
+.custom-accordion .accordion-button:not(.collapsed) {
+    background: rgba(46, 204, 113, 0.1);
+    color: var(--primary-blue);
+}
+
+.custom-accordion .accordion-button::after {
+    background-size: 0.8rem;
+}
+
 @media (max-width: 991px) {
-    .hero-title { font-size: 2.5rem; }
+    .hero-title {
+        font-size: 2.5rem;
+    }
 }

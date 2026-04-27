@@ -72,15 +72,32 @@
     <div class="bg-deep-blue text-white pt-5 pb-5">
         <div class="container pt-5 mt-4 text-center">
             <h1 class="animate__animated animate__fadeInDown">Cartographie Nationale de l'APL</h1>
-            <p class="animate__animated animate__fadeInUp opacity-75">Accessibilité Potentielle Localisée aux médecins
-                généralistes en France.</p>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <p class="animate__animated animate__fadeInUp opacity-75 mb-4">
+                        Accessibilité Potentielle Localisée aux professionnels de santé en France.
+                    </p>
+                    <div class="p-3 rounded-4 bg-white bg-opacity-10 animate__animated animate__fadeInUp"
+                        style="backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.1);">
+                        <p class="mb-0 small">
+                            <strong class="text-emerald">Qu'est-ce que l'APL ?</strong><br>
+                            C'est un indicateur de référence qui mesure l'équilibre entre l'offre de soins disponible et
+                            la demande de la population, en intégrant la proximité géographique et le temps médical
+                            réel.
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Dashboard Content -->
-    <div class="container pt-4 pb-5">
+    <div class="container-fluid pt-4 pb-5 px-5">
+
+        <!-- Section : Cartographie & Explications -->
         <div class="row">
-            <div class="col-12 reveal">
+            <!-- Dashboard APL (9 colonnes sur large) -->
+            <div class="col-lg-9 col-12 mb-4 mb-lg-0 reveal">
                 <div class="dashboard-wrapper">
                     <div class="dashboard-header">
                         <div class="d-flex align-items-center gap-3">
@@ -108,31 +125,124 @@
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row mt-5">
-            <div class="col-md-8 mx-auto reveal text-center">
-                <h4 class="fw-bold mb-3">Comment lire cette carte ?</h4>
-                <p class="text-muted">L'indicateur APL permet de mesurer l'adéquation entre l'offre et la demande de
-                    soins, en tenant compte du temps d'accès aux médecins et du volume d'activité de ces derniers. Une
-                    valeur inférieure à 2,5 indique généralement une zone en sous-densité médicale sévère.</p>
+            <!-- Pourquoi cet indicateur compte (3 colonnes sur large) -->
+            <div class="col-lg-3 col-12 reveal">
+                <div class="h-100 p-4 bg-white rounded-4 shadow-sm border border-light">
+                    <h5 class="fw-bold mb-4 text-deep-blue"><i
+                            class="fa-solid fa-circle-info me-2 text-emerald"></i>L'enjeu de l'APL</h5>
+                    <p class="small text-muted mb-4">Pourquoi l'APL révèle une inégalité de santé ?</p>
+
+                    <div class="accordion accordion-flush custom-accordion" id="accordionMetier">
+                        <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed py-2 px-3 small fw-bold" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#acc1">
+                                    🩺 Généralistes (2,5)
+                                </button>
+                            </h2>
+                            <div id="acc1" class="accordion-collapse collapse" data-bs-parent="#accordionMetier">
+                                <div class="accordion-body text-muted x-small p-3 pt-0">
+                                    Pivot du diagnostic. Un APL < 2,5 allonge les délais et entraîne un renoncement.
+                                        </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed py-2 px-3 small fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#acc2">
+                                        💉 Infirmiers (78,2)
+                                    </button>
+                                </h2>
+                                <div id="acc2" class="accordion-collapse collapse" data-bs-parent="#accordionMetier">
+                                    <div class="accordion-body text-muted x-small p-3 pt-0">
+                                        Continuité des soins à domicile. Une faible présence augmente les
+                                        hospitalisations
+                                        d'urgence.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed py-2 px-3 small fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#acc3">
+                                        🦵 Kinés (48,9)
+                                    </button>
+                                </h2>
+                                <div id="acc3" class="accordion-collapse collapse" data-bs-parent="#accordionMetier">
+                                    <div class="accordion-body text-muted x-small p-3 pt-0">
+                                        Mobilité des personnes. Réduit les risques de chutes mortelles et favorise la
+                                        prévention.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item border-0 mb-2 rounded-3 overflow-hidden">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed py-2 px-3 small fw-bold" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#acc4">
+                                        🤱 Sages-Femmes (9,5)
+                                    </button>
+                                </h2>
+                                <div id="acc4" class="accordion-collapse collapse" data-bs-parent="#accordionMetier">
+                                    <div class="accordion-body text-muted x-small p-3 pt-0">
+                                        Santé périnatale et dépistage précoce des cancers féminins.
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="alert border-0 rounded-4 d-flex align-items-center gap-3 mt-4 reveal" style="background: linear-gradient(135deg, #fff5f5, #fff); 
+                                        border-left: 4px solid #e74c3c !important;">
+                            <i class="fa-solid fa-triangle-exclamation text-danger fa-xl flex-shrink-0"></i>
+                            <div>
+                                <strong>Les zones en rouge correspondent à des territoires à risque.</strong>
+                                <span class="text-muted ms-1 small">La mortalité évitable y est statistiquement plus
+                                    élevée.</span>
+                                <br>
+                                <a id="cta-mortalite-link" href="analyse-mortalite.html"
+                                    class="ms-0 mt-1 text-danger fw-semibold small d-inline-block">
+                                    Consulter l'analyse →
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Footer -->
-    <footer class="footer mt-5">
-        <div class="container text-center">
-            <div class="text-secondary small">
-                &copy; 2026 Santé & Territoire. Expertise territoriale médicale.
-            </div>
-        </div>
-    </footer>
+            <!-- Footer -->
+            <footer class="footer mt-5">
+                <div class="container text-center">
+                    <div class="text-secondary small">
+                        &copy; 2026 Santé & Territoire. Expertise territoriale médicale.
+                    </div>
+                </div>
+            </footer>
 
-    <!-- Bootstrap Bundle with Popper JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom JS -->
-    <script src="js/main.js"></script>
+            <script>
+                window.addEventListener('message', function (event) {
+                    if (!event.data || event.data.type !== 'deptChange') return;
+
+                    var dept = event.data.dept;
+                    var link = document.getElementById('cta-mortalite-link');
+
+                    if (dept) {
+                        // Département sélectionné → lien avec paramètre + texte enrichi
+                        link.href = 'analyse-mortalite.html?departement=' + encodeURIComponent(dept);
+                        link.innerHTML = 'Consulter l\'analyse pour le département <strong>' + dept + '</strong> →';
+                    } else {
+                        // Aucun département → lien générique
+                        link.href = 'analyse-mortalite.html';
+                        link.innerHTML = 'Consulter l\'analyse →';
+                    }
+                });
+            </script>
+            <!-- Bootstrap Bundle with Popper JS -->
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <!-- Custom JS -->
+            <script src="js/main.js"></script>
 </body>
 
 </html>
