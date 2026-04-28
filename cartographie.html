@@ -222,6 +222,26 @@
             </footer>
 
             <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const dept = urlParams.get('departement');
+
+                    if (dept) {
+                        const iframe = document.querySelector('iframe[src="dashboard_sante_v5.html"]');
+                        if (iframe) {
+                            iframe.src = 'dashboard_sante_v5.html?departement=' + encodeURIComponent(dept);
+                        }
+                        
+                        // Update the CTA link immediately on page load
+                        var link = document.getElementById('cta-mortalite-link');
+                        if (link) {
+                            // Find the proper capitalized/formatted string if possible, or just use dept directly
+                            link.href = 'analyse-mortalite.html?departement=' + encodeURIComponent(dept);
+                            link.innerHTML = 'Consulter l\'analyse pour le département <strong>' + dept + '</strong> →';
+                        }
+                    }
+                });
+
                 window.addEventListener('message', function (event) {
                     if (!event.data || event.data.type !== 'deptChange') return;
 

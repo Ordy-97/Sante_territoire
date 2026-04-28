@@ -192,7 +192,27 @@
                         ds.innerHTML += `<option value="${dep}">${dep}</option>`;
                     });
 
+                    // Parse departement param
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const depParam = urlParams.get('departement');
+                    if (depParam) {
+                        const paramClean = depParam.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f\- ]/g, "");
+                        for (let i = 0; i < ds.options.length; i++) {
+                            let optTextClean = ds.options[i].text.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f\- ]/g, "");
+                            let optValueClean = ds.options[i].value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f\- ]/g, "");
+                            if (optValueClean === paramClean || optTextClean === paramClean || optTextClean.includes(paramClean)) {
+                                ds.selectedIndex = i;
+                                currentDept = ds.options[i].value;
+                                break;
+                            }
+                        }
+                    }
+
                     renderLayer();
+                    if(currentDept) {
+                        zoomToDept();
+                        window.parent.postMessage({ type: 'deptChange', dept: currentDept }, '*');
+                    }
                 });
         };
 
