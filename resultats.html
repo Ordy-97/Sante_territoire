@@ -85,7 +85,7 @@
     <!-- Main Results Section -->
     <div class="container pt-5 pb-5">
         <div class="row">
-            <div class="col-lg-8 mx-auto">
+            <div class="col-lg-11 mx-auto">
 
                 <!-- Section 1 -->
                 <div class="result-section reveal">
@@ -103,41 +103,94 @@
                     </div>
                 </div>
 
-                <!-- Section 2 -->
-                <div class="result-section reveal">
-                    <h3 class="fw-bold text-primary mb-4">2. Impact sur les indicateurs de santé</h3>
-                    <p>Il existe une corrélation positive statistiquement significative entre l'éloignement géographique
-                        des centres de soins primaires et la mortalité évitable par anticipation du diagnostic (cancers,
-                        maladies cardiovasculaires).</p>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><i class="fa-solid fa-circle-info text-emerald me-2"></i> Un écart de survie de
-                            3% a été observé sur les zones à APL très faible.</li>
-                        <li class="mb-2"><i class="fa-solid fa-circle-info text-emerald me-2"></i> L'impact est encore
-                            plus marqué sur la population âgée de plus de 75 ans.</li>
-                    </ul>
+                <!-- Section 2 : Analyse de la mortalité territoriale en France -->
+                <div class="result-section reveal mt-5">
+                    <h3 class="fw-bold text-primary mb-4">2. Analyse de la mortalité territoriale</h3>
+                    <p class="lead">L'analyse des données CépiDc sur <strong>287 497 décès</strong> révèle des inégalités territoriales profondes qui ne doivent rien au hasard.</p>
+
+                    <div class="row g-4 mt-2">
+                        <!-- Item 1 -->
+                        <div class="col-md-6">
+                            <div class="kpi-card p-4 h-100 bg-white shadow-sm border border-light rounded-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-light rounded-circle p-2 me-3">
+                                        <i class="fa-solid fa-location-dot text-danger fa-xl"></i>
+                                    </div>
+                                    <h5 class="text-primary fw-bold mb-0">Un territoire concentre la crise : la Creuse</h5>
+                                </div>
+                                <p class="text-muted small mb-0">La Creuse représente <strong class="text-danger">1,65% du total des décès</strong> nationaux, pour un département qui pèse <strong class="text-dark">moins de 0,3% de la population</strong> française. C'est le <strong class="text-dark">territoire le plus touché</strong> de France — et l'un des plus sous-dotés en offre de soins, avec un <strong class="text-danger">APL généraliste parmi les plus faibles</strong> du pays.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Item 2 -->
+                        <div class="col-md-6">
+                            <div class="kpi-card p-4 h-100 bg-white shadow-sm border border-light rounded-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-light rounded-circle p-2 me-3">
+                                        <i class="fa-solid fa-map text-warning fa-xl"></i>
+                                    </div>
+                                    <h5 class="text-primary fw-bold mb-0">La géographie suit l'offre de soins</h5>
+                                </div>
+                                <p class="text-muted small mb-0">La carte de répartition géographique révèle une concentration marquée dans la <strong class="text-dark">diagonale centre-ouest</strong> : Creuse, Corrèze, Allier, Haute-Vienne. Ces départements cumulent <strong class="text-dark">trois facteurs aggravants</strong> — vieillissement, isolement géographique et <strong class="text-danger">sous-dotation médicale chronique</strong>. À l'inverse, les littoraux et l'Île-de-France affichent une mortalité plus faible là où la <strong class="text-emerald">densité médicale est élevée</strong>.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="col-md-6">
+                            <div class="kpi-card p-4 h-100 bg-white shadow-sm border border-light rounded-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-light rounded-circle p-2 me-3">
+                                        <i class="fa-solid fa-heart-pulse text-emerald fa-xl"></i>
+                                    </div>
+                                    <h5 class="text-primary fw-bold mb-0">Des causes de décès largement évitables</h5>
+                                </div>
+                                <p class="text-muted small mb-0">Les tumeurs représentent <strong class="text-danger">29,42% des décès</strong> et les maladies de l'appareil circulatoire environ <strong class="text-danger">25%</strong>. Ce sont précisément les pathologies les plus sensibles à la qualité de l'accès aux soins : <strong class="text-dark">dépistage tardif, suivi insuffisant, prévention absente</strong>. Dans les territoires sous-dotés, ces maladies sont diagnostiquées plus tard et <strong class="text-danger">traitées moins efficacement</strong>.</p>
+                            </div>
+                        </div>
+
+                        <!-- Item 4 -->
+                        <div class="col-md-6">
+                            <div class="kpi-card p-4 h-100 bg-white shadow-sm border border-light rounded-4">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="bg-light rounded-circle p-2 me-3">
+                                        <i class="fa-solid fa-person text-info fa-xl"></i>
+                                    </div>
+                                    <h5 class="text-primary fw-bold mb-0">Une surmortalité masculine précoce</h5>
+                                </div>
+                                <p class="text-muted small mb-0">L'analyse par âge et sexe montre que l'écart de mortalité est le plus significatif <strong class="text-danger">avant 85 ans</strong> : les <strong class="text-dark">hommes sont surreprésentés</strong> dans chaque tranche d'âge active. Dans les déserts médicaux, ce sont eux qui <strong class="text-danger">renoncent le plus aux soins</strong>, faute d'accès rapide à un médecin généraliste ou de temps pour consulter.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Section 3 : Recommendations -->
-                <div class="reveal mt-5">
-                    <div class="bg-white p-5 rounded-4 shadow-sm border">
-                        <h3 class="fw-bold text-emerald mb-4"><i class="fa-solid fa-lightbulb me-2"></i> Nos
-                            Préconisations</h3>
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="bg-light p-3 rounded-3 border-start border-4 border-emerald h-100">
-                                    <h5 class="fw-bold">Régulateur Territorial</h5>
-                                    <p class="small text-muted mb-0">Déployer des incitations financières modulées selon
-                                        l'indice APL local réel plutôt que sur des zonages administratifs larges.</p>
+                <!-- Section 3 : Conclusion -->
+                <div class="reveal mt-5 mb-5">
+                    <div class="bg-white p-5 rounded-4 shadow-sm border-start border-5 border-emerald">
+                        <h3 class="fw-bold text-emerald mb-4"><i class="fa-solid fa-flag-checkered me-2"></i> Conclusion Partagée</h3>
+                        <p class="text-muted mb-4 lead fs-6">L’analyse met en évidence de fortes disparités territoriales de mortalité, particulièrement marquées dans le centre de la France. Ces écarts s’expliquent par des facteurs démographiques (vieillissement), mais en grande partie par des facteurs d’accessibilité aux soins mesurés par l’APL.</p>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <div class="bg-light p-3 rounded-3 h-100 border-start border-3 border-danger">
+                                    <h6 class="fw-bold text-primary"><i class="fa-solid fa-triangle-exclamation text-danger me-2"></i> Triple Peine</h6>
+                                    <p class="small text-muted mb-0">Les territoires en difficulté cumulent faible accès aux généralistes, isolement géographique et caractéristiques socio-économiques défavorables.</p>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="bg-light p-3 rounded-3 border-start border-4 border-emerald h-100">
-                                    <h5 class="fw-bold">Maison de Santé 2.0</h5>
-                                    <p class="small text-muted mb-0">Favoriser l'émergence de structures
-                                        pluri-professionnelles dotées d'outils de télé-expertise avancés.</p>
+                            <div class="col-md-4">
+                                <div class="bg-light p-3 rounded-3 h-100 border-start border-3 border-warning">
+                                    <h6 class="fw-bold text-primary"><i class="fa-solid fa-shield-heart text-warning me-2"></i> Rôle de la Prévention</h6>
+                                    <p class="small text-muted mb-0">Tumeurs et pathologies cardiovasculaires, dominantes, sont structurellement évitables par un parcours de soins régulier et précoce.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="bg-light p-3 rounded-3 h-100 border-start border-3 border-emerald">
+                                    <h6 class="fw-bold text-primary"><i class="fa-solid fa-magnifying-glass-chart text-emerald me-2"></i> Indicateur APL</h6>
+                                    <p class="small text-muted mb-0">Les écarts de l'APL reflètent et renforcent les inégalités observées, la baisse d'accessibilité augmentant la létalité.</p>
                                 </div>
                             </div>
                         </div>
+                        
+                        <p class="mb-0 text-muted fst-italic text-center small opacity-75">La mortalité n'est pas une fatalité uniforme : rebooster l'offre de soins primaires permettrait de neutraliser ces inégalités territoriales de manière significative.</p>
                     </div>
                 </div>
 
