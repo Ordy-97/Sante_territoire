@@ -106,7 +106,7 @@
                             <h4 class="mb-0 fw-bold">Dashboard Interactif</h4>
                         </div>
                         <div class="d-flex gap-2">
-                            <a href="dashboard_sante_v5.html" target="_blank"
+                            <a href="dashboard_sante_v6.html" target="_blank"
                                 class="btn btn-outline-primary btn-sm rounded-pill"><i
                                     class="fa-solid fa-expand me-2"></i>Plein écran</a>
                         </div>
@@ -120,7 +120,7 @@
                         </div>
 
                         <!-- Iframe -->
-                        <iframe src="dashboard_sante_v5.html" scrolling="no"
+                        <iframe src="dashboard_sante_v6.html" scrolling="no"
                             class="animate__animated animate__fadeIn"></iframe>
                     </div>
                 </div>
@@ -202,7 +202,12 @@
                                 Standardisée</strong><br>
                             <span class="text-muted">Le filtre du dashboard n'utilise pas le nombre d'habitants brut,
                                 mais un <strong>besoin théorique de soins</strong>. La population est ajustée selon la
-                                consommation médicale réelle par tranche d'âge (les seniors pesant plus lourd).</span>
+                                consommation médicale réelle par tranche d'âge — les seniors consultant davantage, ils
+                                "pèsent" plus lourd dans ce calcul.<br><br>
+                                <strong>Concrètement</strong>, une commune de 1 000 habitants très âgés peut afficher
+                                une population standardisée de 1 400, tandis qu'une commune jeune de même taille n'en
+                                affichera que 800. Cela permet de comparer les besoins réels en soins entre territoires,
+                                indépendamment de leur structure démographique.</span>
                         </div>
 
                         <div class="alert border-0 rounded-4 d-flex align-items-center gap-3 mt-3 reveal" style="background: linear-gradient(135deg, #fff5f5, #fff); 
@@ -238,9 +243,9 @@
                     const dept = urlParams.get('departement');
 
                     if (dept) {
-                        const iframe = document.querySelector('iframe[src="dashboard_sante_v5.html"]');
+                        const iframe = document.querySelector('iframe[src="dashboard_sante_v6.html"]');
                         if (iframe) {
-                            iframe.src = 'dashboard_sante_v5.html?departement=' + encodeURIComponent(dept);
+                            iframe.src = 'dashboard_sante_v6.html?departement=' + encodeURIComponent(dept);
                         }
 
                         // Update the CTA link immediately on page load

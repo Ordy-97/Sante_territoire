@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css" />
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css" />
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css" />
+
+    <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <style>
+        #map_7460cb5c96e2d0108665b9fd23f3aed7 {
+            position: relative;
+            width: 100.0%;
+            height: 100.0%;
+            left: 0.0%;
+            top: 0.0%;
+        }
+
+        .leaflet-container {
+            font-size: 1rem;
+        }
+    </style>
+
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+
+    <style>
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            left: 0;
+        }
+    </style>
+
+    <script>
+        L_NO_TOUCH = false;
+        L_DISABLE_3D = false;
+    </script>
+
+
+</head>
+
+<body>
+
+
+    <!-- ① Panneau Métier — haut droite -->
+    <div id="metier-panel"
+        style="position:fixed; z-index:9999; background:white; border-radius:10px;box-shadow:0 2px 20px rgba(0,0,0,0.18); font-family:'Segoe UI',Arial,sans-serif; font-size:13px; top:10px; right:10px; padding:14px; width:200px;">
+        <div style="font-weight:700; font-size:13px; color:#333; margin-bottom:10px; letter-spacing:.3px;">
+            👩‍⚕️ Professionnel de santé
+        </div>
+        <div id="metier-radios" style="display:flex; flex-direction:column; gap:7px;">
+            <label style="display:flex; align-items:center; gap:7px; cursor:pointer;">
+                <input type="radio" name="metier" value="Généralistes" checked onchange="onMetierChange()"> Généralistes
+            </label>
+            <label style="display:flex; align-items:center; gap:7px; cursor:pointer;">
+                <input type="radio" name="metier" value="Infirmiers" onchange="onMetierChange()"> Infirmiers
+            </label>
+            <label style="display:flex; align-items:center; gap:7px; cursor:pointer;">
+                <input type="radio" name="metier" value="Kinés" onchange="onMetierChange()"> Kinés
+            </label>
+            <label style="display:flex; align-items:center; gap:7px; cursor:pointer;">
+                <input type="radio" name="metier" value="Sages-Femmes" onchange="onMetierChange()"> Sages-Femmes
+            </label>
+        </div>
+    </div>
+
+    <!-- ② Panneau Filtres Géographiques — haut gauche -->
+    <div id="filter-panel"
+        style="position:fixed; z-index:9999; background:white; border-radius:10px;box-shadow:0 2px 20px rgba(0,0,0,0.18); font-family:'Segoe UI',Arial,sans-serif; font-size:13px; top:10px; left:50px; padding:16px; width:250px;">
+        <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:12px;">
+            <span style="font-weight:700; font-size:13px; color:#333;">🗂 Filtres géographiques</span>
+            <button onclick="resetFilters()" title="Réinitialiser les filtres" style="background:none; border:none; cursor:pointer; font-size:17px; color:#bbb;
+                       line-height:1; padding:0; transition:color .2s;" onmouseover="this.style.color='#e74c3c'"
+                onmouseout="this.style.color='#bbb'">↺</button>
+        </div>
+
+        <label style="font-weight:600; display:block; margin-bottom:4px;">Département</label>
+        <select id="dept-select"
+            style="width:100%; margin-bottom:12px; padding:5px; border-radius:6px; border:1px solid #ccc;"
+            onchange="onDeptChange()">
+            <option value="">— Tous —</option>
+        </select>
+
+        <label style="font-weight:600; display:block; margin-bottom:0px;">
+            Population standardisée
+            <span style="font-size:11px; font-weight:normal; color:#555;">(min : <span id="pop-val">0</span>)</span>
+        </label>
+        <span style="font-size:10px; color:#888; display:block; margin-bottom:8px; line-height:1.2;">
+            (Standardisée par la consommation de soins par tranche d'âge)
+        </span>
+        <input type="range" id="pop-range" min="0" max="50000" value="0" step="500"
+            style="width:100%; margin-bottom:4px;" oninput="onPopInput()" onchange="applyFilters()">
+
+        <label style="font-weight:600; display:block; margin-bottom:4px; margin-top:10px;">Commune</label>
+        <select id="commune-select" style="width:100%; padding:5px; border-radius:6px; border:1px solid #ccc;"
+            onchange="onCommuneChange()">
+            <option value="">— Choisir —</option>
+        </select>
+
+        <div id="stats-bar" style="margin-top:12px; font-size:11px; color:#666;
+                                    border-top:1px solid #eee; padding-top:8px;">
+            Chargement…
+        </div>
+    </div>
+
+    <!-- ③ Légende dynamique — bas gauche -->
+    <div id="dynamic-legend"
+        style="position:fixed; z-index:9999; background:white; border-radius:10px;box-shadow:0 2px 20px rgba(0,0,0,0.18); font-family:'Segoe UI',Arial,sans-serif; font-size:13px; bottom:30px; left:20px; padding:12px; width:175px;">
+        <b id="leg-title" style="font-size:13px; display:block; margin-bottom:6px;">Généralistes</b>
+        <div style="font-size:12px; margin-bottom:3px;">
+            <span style="color:#e74c3c; font-size:17px; line-height:1;">●</span>
+            Déficit ≤ <span id="leg-seuil-red">2.5</span>
+        </div>
+        <div style="font-size:12px; margin-bottom:3px;">
+            <span style="color:#27ae60; font-size:17px; line-height:1;">●</span>
+            OK &gt; <span id="leg-seuil-green">2.5</span>
+        </div>
+        <div style="font-size:12px;">
+            <span style="color:#aaa; font-size:17px; line-height:1;">●</span>
+            Donnée absente
+        </div>
+    </div>
+
+
+    <script>
+        // ══════════════════════════════════════════════════════════
+        // CONFIG & STATE
+        // ══════════════════════════════════════════════════════════
+        var SEUILS = { "G\u00e9n\u00e9ralistes": 2.5, "Infirmiers": 78.2, "Kin\u00e9s": 48.9, "Sages-Femmes": 9.5 };
+        var POP_STD_KEYS = { "G\u00e9n\u00e9ralistes": "pop_std_gene", "Kin\u00e9s": "pop_std_kine", "Infirmiers": "pop_std_inf", "Sages-Femmes": "pop_std_sf" };
+        var FRANCE_BOUNDS = [[41.3, -5.2], [51.1, 9.6]];
+        var MAP = null;
+        var geoLayer = null;
+        var canvasRenderer = null;
+
+        var currentMetier = "Généralistes";
+        var currentDept = "";
+        var currentMinPop = 0;
+        var currentCommune = null;
+
+        window._cachedFeatures = null;
+        var deptBoundsIndex = {};
+
+        // ══════════════════════════════════════════════════════════
+        // INIT
+        // ══════════════════════════════════════════════════════════
+        window.onload = function () {
+            MAP = map_7460cb5c96e2d0108665b9fd23f3aed7;
+            canvasRenderer = L.canvas({ padding: 0.5 });
+
+            fetch("communes_apl.geojson")
+                .then(r => r.json())
+                .then(geojson => {
+                    window._cachedFeatures = geojson.features;
+
+                    // Construire l'index des bounds par département
+                    geojson.features.forEach(f => {
+                        var dept = f.properties.dept;
+                        var lon = f.geometry.coordinates[0];
+                        var lat = f.geometry.coordinates[1];
+                        if (!deptBoundsIndex[dept]) deptBoundsIndex[dept] = { minLat: 90, maxLat: -90, minLon: 180, maxLon: -180 };
+                        var b = deptBoundsIndex[dept];
+                        if (lat < b.minLat) b.minLat = lat;
+                        if (lat > b.maxLat) b.maxLat = lat;
+                        if (lon < b.minLon) b.minLon = lon;
+                        if (lon > b.maxLon) b.maxLon = lon;
+                    });
+
+                    // Peupler le select département
+                    var ds = document.getElementById('dept-select');
+                    Object.keys(deptBoundsIndex).sort().forEach(dep => {
+                        ds.innerHTML += `<option value="${dep}">${dep}</option>`;
+                    });
+
+                    // Parse paramètre URL ?departement= (v5)
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const depParam = urlParams.get('departement');
+                    if (depParam) {
+                        const paramClean = depParam.toLowerCase().normalize("NFD").replace(/[̀-ͯ\- ]/g, "");
+                        for (let i = 0; i < ds.options.length; i++) {
+                            let optTextClean = ds.options[i].text.toLowerCase().normalize("NFD").replace(/[̀-ͯ\- ]/g, "");
+                            let optValueClean = ds.options[i].value.toLowerCase().normalize("NFD").replace(/[̀-ͯ\- ]/g, "");
+                            if (optValueClean === paramClean || optTextClean === paramClean || optTextClean.includes(paramClean)) {
+                                ds.selectedIndex = i;
+                                currentDept = ds.options[i].value;
+                                break;
+                            }
+                        }
+                    }
+
+                    renderLayer();
+                    if (currentDept) {
+                        zoomToDept();
+                        window.parent.postMessage({ type: 'deptChange', dept: currentDept }, '*');
+                    }
+                });
+        };
+
+        // ══════════════════════════════════════════════════════════
+        // RENDER
+        // ══════════════════════════════════════════════════════════
+        function buildLayerOptions() {
+            var seuil = SEUILS[currentMetier];
+            var aplKey = 'apl_' + currentMetier;
+            var stdKey = POP_STD_KEYS[currentMetier];  // pop_std du métier actif
+
+            return {
+                renderer: canvasRenderer,
+                filter: function (feature) {
+                    var p = feature.properties;
+                    if (currentDept && p.dept !== currentDept) return false;
+                    // Filtre sur la population STANDARDISÉE du métier actif (v5)
+                    var popStd = p[stdKey] > 0 ? p[stdKey] : 0;
+                    if (popStd < currentMinPop) return false;
+                    return true;
+                },
+                pointToLayer: function (feature, latlng) {
+                    var apl = feature.properties[aplKey];
+                    var color = apl < 0 ? '#aaaaaa' : (apl <= seuil ? '#e74c3c' : '#27ae60');
+                    return L.circleMarker(latlng, {
+                        radius: 4,
+                        color: color,
+                        fillColor: color,
+                        fillOpacity: 0.78,
+                        weight: 0,
+                        renderer: canvasRenderer
+                    });
+                },
+                onEachFeature: function (feature, layer) {
+                    var p = feature.properties;
+                    var apl = p[aplKey];
+                    var std = p[stdKey];
+                    var seuil_ = SEUILS[currentMetier];
+                    var col = apl < 0 ? '#aaa' : (apl <= seuil_ ? '#e74c3c' : '#27ae60');
+
+                    var aplTxt = apl < 0
+                        ? '<i style="color:#aaa">Non disponible</i>'
+                        : '<b style="font-size:15px;color:' + col + '">' + apl.toFixed(2) + '</b>';
+
+                    var stdTxt = std > 0
+                        ? Math.round(std).toLocaleString('fr-FR')
+                        : '<i style="color:#aaa">N/D</i>';
+
+                    var statut = apl < 0 ? '' :
+                        (apl <= seuil_
+                            ? '<span style="background:#fdecea;color:#c0392b;padding:2px 7px;border-radius:4px;font-size:11px;">⚠ Zone déficitaire</span>'
+                            : '<span style="background:#eafaf1;color:#1e8449;padding:2px 7px;border-radius:4px;font-size:11px;">✔ Offre suffisante</span>');
+
+                    var popupHtml =
+                        '<div style="font-family:Segoe UI,Arial,sans-serif; min-width:220px; padding:4px 2px;">' +
+                        '<div style="font-size:15px;font-weight:700;color:#222;margin-bottom:2px;">' + p.nom + '</div>' +
+                        '<div style="font-size:11px;color:#999;margin-bottom:8px;">Dept ' + p.dept + ' &nbsp;·&nbsp; INSEE ' + p.insee + '</div>' +
+                        '<div style="font-size:12px;margin-bottom:3px;">👥 Population réelle : <b>' + p.pop_totale.toLocaleString('fr-FR') + '</b> hab.</div>' +
+                        '<div style="font-size:12px;margin-bottom:6px;">📊 Population standardisée : <b>' + stdTxt + '</b></div>' +
+                        '<hr style="margin:6px 0;border:none;border-top:1px solid #eee;">' +
+                        '<div style="font-size:12px;margin-bottom:6px;">APL <b>' + currentMetier + '</b> &nbsp;: ' + aplTxt + '</div>' +
+                        '<div style="font-size:11px;color:#bbb;margin-bottom:6px;">Seuil national : ' + seuil_ + '</div>' +
+                        statut +
+                        '</div>';
+
+                    layer.bindPopup(popupHtml, { maxWidth: 270 });
+                }
+            };
+        }
+
+        function renderLayer() {
+            if (!window._cachedFeatures) return;
+            if (geoLayer) MAP.removeLayer(geoLayer);
+            geoLayer = L.geoJSON(
+                { type: "FeatureCollection", features: window._cachedFeatures },
+                buildLayerOptions()
+            ).addTo(MAP);
+            updateStats();
+            updateCommuneList();
+        }
+
+        // ══════════════════════════════════════════════════════════
+        // FILTRES & ZOOM RÉACTIF
+        // ══════════════════════════════════════════════════════════
+        function onDeptChange() {
+            currentDept = document.getElementById('dept-select').value;
+            currentCommune = null;
+            document.getElementById('commune-select').value = '';
+            applyFilters();
+            zoomToDept();
+            // Notifier la page parente (v5)
+            window.parent.postMessage({ type: 'deptChange', dept: currentDept }, '*');
+        }
+
+        function onCommuneChange() {
+            var v = document.getElementById('commune-select').value;
+            if (!v) {
+                currentCommune = null;
+                zoomToDept();
+                return;
+            }
+            var parts = v.split(',');
+            currentCommune = { lat: parseFloat(parts[0]), lon: parseFloat(parts[1]) };
+            MAP.flyTo([currentCommune.lat, currentCommune.lon], 13, { animate: true, duration: 1 });
+        }
+
+        function onMetierChange() {
+            currentMetier = document.querySelector('input[name="metier"]:checked').value;
+            var s = SEUILS[currentMetier];
+            document.getElementById('leg-title').innerText = currentMetier;
+            document.getElementById('leg-seuil-red').innerText = s;
+            document.getElementById('leg-seuil-green').innerText = s;
+            renderLayer();
+        }
+
+        var popTimer = null;
+        function onPopInput() {
+            document.getElementById('pop-val').innerText =
+                parseInt(document.getElementById('pop-range').value).toLocaleString('fr-FR');
+            clearTimeout(popTimer);
+            popTimer = setTimeout(applyFilters, 300);
+        }
+
+        function applyFilters() {
+            currentDept = document.getElementById('dept-select').value;
+            currentMinPop = parseInt(document.getElementById('pop-range').value);
+            renderLayer();
+        }
+
+        function zoomToDept() {
+            if (currentDept && deptBoundsIndex[currentDept]) {
+                var b = deptBoundsIndex[currentDept];
+                MAP.flyToBounds(
+                    [[b.minLat, b.minLon], [b.maxLat, b.maxLon]],
+                    { padding: [40, 40], animate: true, duration: 1 }
+                );
+            } else {
+                MAP.flyToBounds(FRANCE_BOUNDS, { animate: true, duration: 1 });
+            }
+        }
+
+        function resetFilters() {
+            document.getElementById('dept-select').value = '';
+            document.getElementById('pop-range').value = 0;
+            document.getElementById('pop-val').innerText = '0';
+            document.getElementById('commune-select').value = '';
+            currentDept = '';
+            currentMinPop = 0;
+            currentCommune = null;
+            renderLayer();
+            MAP.flyToBounds(FRANCE_BOUNDS, { animate: true, duration: 1 });
+            // Notifier la page parente (v5)
+            window.parent.postMessage({ type: 'deptChange', dept: '' }, '*');
+        }
+
+        // ══════════════════════════════════════════════════════════
+        // STATS & LISTE COMMUNES
+        // Filtre basé sur la pop standardisée du métier actif (v5)
+        // ══════════════════════════════════════════════════════════
+        function getPopStd(p) {
+            var val = p[POP_STD_KEYS[currentMetier]];
+            return val > 0 ? val : 0;
+        }
+
+        function updateStats() {
+            if (!window._cachedFeatures) return;
+            var visible = window._cachedFeatures.filter(f => {
+                var p = f.properties;
+                return (!currentDept || p.dept === currentDept) && getPopStd(p) >= currentMinPop;
+            }).length;
+            document.getElementById('stats-bar').innerHTML =
+                '<b>' + visible.toLocaleString('fr-FR') + '</b> communes affichées'
+                + ' / ' + window._cachedFeatures.length.toLocaleString('fr-FR');
+        }
+
+        function updateCommuneList() {
+            if (!window._cachedFeatures) return;
+            var cs = document.getElementById('commune-select');
+            var prev = cs.value;
+            cs.innerHTML = '<option value="">— Choisir —</option>';
+            var filtered = window._cachedFeatures
+                .filter(f => {
+                    var p = f.properties;
+                    return (!currentDept || p.dept === currentDept) && getPopStd(p) >= currentMinPop;
+                })
+                .sort((a, b) => a.properties.nom.localeCompare(b.properties.nom, 'fr'))
+                .slice(0, 400);
+
+            filtered.forEach(f => {
+                var p = f.properties;
+                var lat = f.geometry.coordinates[1];
+                var lon = f.geometry.coordinates[0];
+                var opt = document.createElement('option');
+                opt.value = lat + ',' + lon;
+                opt.text = p.nom;
+                if (opt.value === prev) opt.selected = true;
+                cs.appendChild(opt);
+            });
+        }
+    </script>
+
+    <div class="folium-map" id="map_7460cb5c96e2d0108665b9fd23f3aed7"></div>
+
+</body>
+<script>
+
+
+    var map_7460cb5c96e2d0108665b9fd23f3aed7 = L.map(
+        "map_7460cb5c96e2d0108665b9fd23f3aed7",
+        {
+            center: [46.5, 2.5],
+            crs: L.CRS.EPSG3857,
+            ...{
+                "zoom": 6,
+                "zoomControl": true,
+                "preferCanvas": false,
+            }
+
+        }
+    );
+
+
+
+
+
+    var tile_layer_c9e5e7c25be716b6cf5bbdc368734dd6 = L.tileLayer(
+        "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+        {
+            "minZoom": 0,
+            "maxZoom": 20,
+            "maxNativeZoom": 20,
+            "noWrap": false,
+            "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+            "subdomains": "abcd",
+            "detectRetina": false,
+            "tms": false,
+            "opacity": 1,
+        }
+
+    );
+
+
+    tile_layer_c9e5e7c25be716b6cf5bbdc368734dd6.addTo(map_7460cb5c96e2d0108665b9fd23f3aed7);
+
+</script>
+
+</html>
